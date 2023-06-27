@@ -235,39 +235,6 @@ server:
       cpu: 500m
       memory: 1000Mi
 
-service:
-  # service.annotations -- Annotations to add to the service
-  annotations: {}
-  # service.loadBalancerIP -- Specific IP address to use for cloud providers such as Azure Kubernetes Service [ref](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer)
-  loadBalancerIP:
-  # service.type -- Kubernetes Service type
-  type: ClusterIP
-  # service.port -- Service external port
-  port: 80
-
-ingress:
-  # ingress.enabled -- Enable ingress controller resource
-  enabled: false
-  # ingress.annotations -- Ingress annotations configuration
-  annotations: {}
-
-  # ingress.ingressClassName -- Sets the ingress controller class name to use.
-  ingressClassName: ""
-
-  # ingress.hosts -- Ingress resource hostnames and path mappings
-  hosts:
-    - host: chart-example.local
-      paths: []
-
-  #ingress.pathType -- How ingress paths should be treated.
-  pathType: Prefix
-
-  # ingress.tls -- Ingress TLS configuration
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-
 ## Configuration for Redash ad-hoc workers
 adhocWorker:
   # adhocWorker.env -- Redash ad-hoc worker specific environment variables.
