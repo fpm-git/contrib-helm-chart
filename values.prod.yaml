@@ -14,14 +14,6 @@ fullnameOverride: ""
 env:
   PYTHONUNBUFFERED: 0
 
-envFrom:
-  - secretRef:
-      name: redash-secret
-  - secretRef:
-      name: redash-postgres
-  - secretRef:
-      name: redash-redis
-
 ## Redash application configuration
 redash:
   ## Start primary Redash configuration
