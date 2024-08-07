@@ -249,10 +249,10 @@ adhocWorker:
   resources:
     limits:
       cpu: 250m
-      memory: 500Mi
+      memory: 1000Mi
     requests:
       cpu: 100m
-      memory: 100Mi
+      memory: 500Mi
 
 ## Configuration for Redash scheduled workers
 scheduledWorker:
