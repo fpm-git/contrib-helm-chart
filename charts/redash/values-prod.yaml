@@ -3,7 +3,7 @@ image:
   # image.repo -- Redash image name used for server and worker pods
   repo: redash/redash
   # image.tag -- Redash image [tag](https://hub.docker.com/r/redash/redash/tags)
-  tag: 25.1.0
+  tag: 25.8.0
   # image.pullPolicy - Image pull policy
   pullPolicy: IfNotPresent
 
