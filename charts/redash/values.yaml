@@ -584,7 +584,7 @@ postgresqlMigration:
     # If not set, uses emptyDir which will NOT persist between hooks (migration will fail).
     pvcName: ""
 
-# externalPostgreSQL -- External PostgreSQL configuration. To use an external PostgreSQL instead of the automatically deployed postgresql chart: set postgresql.enabled to false then uncomment and configure the externalPostgreSQL connection URL (e.g. postgresql://user:pass@host:5432/database)
+# externalPostgreSQL -- External PostgreSQL configuration. Configure the externalPostgreSQL connection URL (e.g. postgresql://user:pass@host:5432/database)
 externalPostgreSQL:
 # externalPostgreSQLSecret -- Read external PostgreSQL configuration from a secret. This should point at a secret file with a single key which specifies the connection string.
 externalPostgreSQLSecret:
@@ -595,21 +595,6 @@ externalPostgreSQLSecret:
 # envSecretName -- DEPRECIATED, use externalPostgreSQLSecret/externalRedisSecret instead. Contents of this secret will be loaded as environment variables into the container. Useful e.g. to set to set PostgreSQL password in externalPostgreSQL parameter: postgresql://user:$(POSTGRESQL_PASSWORD)@host:5432/database [ref](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config)
 # envSecretName:
 
-## Configuration values for the postgresql dependency. This PostgreSQL instance is used by default for all Redash state storage [ref](https://github.com/bitnami/charts/blob/main/bitnami/postgresql/README.md)
-postgresql:
-  # postgresql.enabled -- Whether to deploy a PostgreSQL server to satisfy the applications database requirements. To use an external PostgreSQL set this to false and configure the externalPostgreSQL parameter.
-  enabled: true
-  primary:
-    service:
-      ports:
-        postgresql: 5432
-  auth:
-    # postgresql.auth.username -- PostgreSQL username for redash user (when postgresql chart enabled)
-    username: redash
-    # postgresql.auth.password -- REQUIRED: PostgreSQL password for redash user (when postgresql chart enabled)
-    password:
-  # postgresql.auth.database -- PostgreSQL database name (when postgresql chart enabled)
-    database: redash
 
 # externalRedis -- External Redis configuration. To use an external Redis instead of the automatically deployed redis chart: set redis.enabled to false then uncomment and configure the externalRedis connection URL (e.g. redis://user:pass@host:6379/database).
 externalRedis:
@@ -619,17 +604,6 @@ externalRedisSecret:
   # name: redash-redis
   # key: connectionString
 
-## Configuration values for the redis dependency. This Redis instance is used by default for caching and temporary storage [ref](https://github.com/bitnami/charts/blob/main/bitnami/redis/README.md)
-redis:
-  # redis.enabled -- Whether to deploy a Redis server to satisfy the applications database requirements. To use an external Redis set this to false and configure the externalRedis parameter.
-  enabled: true
-  database: 0
-  master:
-    service:
-      ports:
-        redis: 6379
-  replica:
-    replicaCount: 0
 
 # extraObjects -- Additional kubernetes manifests to deploy alongside the chart. Useful to include external secrets for dependencies.
 extraObjects: []

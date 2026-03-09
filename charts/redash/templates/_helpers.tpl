@@ -47,20 +47,6 @@ Create a default fully qualified scheduler name.
 {{- end -}}
 
 {{/*
-Create a default fully qualified postgresql name.
-*/}}
-{{- define "redash.postgresql.fullname" -}}
-{{- printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{/*
-Create a default fully qualified redis name.
-*/}}
-{{- define "redash.redis.fullname" -}}
-{{- printf "%s-%s" .Release.Name "redis-master" | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{/*
 Get the secret name.
 */}}
 {{- define "redash.secretName" -}}
@@ -75,7 +61,6 @@ Get the secret name.
 Shared environment block used across each component.
 */}}
 {{- define "redash.env" -}}
-{{- if not .Values.postgresql.enabled -}}
 {{- if not .Values.redash.selfManagedSecrets -}}
 - name: REDASH_DATABASE_URL
   {{- with .Values.externalPostgreSQLSecret }}
@@ -85,22 +70,6 @@ Shared environment block used across each component.
   value: {{ default "" .Values.externalPostgreSQL | quote }}
   {{- end }}
 {{- end }}
-{{- else -}}
-- name: REDASH_DATABASE_USER
-  value: {{ .Values.postgresql.auth.username | quote }}
-- name: REDASH_DATABASE_PASSWORD
-  valueFrom:
-    secretKeyRef:
-      name: {{ .Release.Name }}-postgresql
-      key: password
-- name: REDASH_DATABASE_HOSTNAME
-  value: {{ include "redash.postgresql.fullname" . }}
-- name: REDASH_DATABASE_PORT
-  value: {{ .Values.postgresql.primary.service.ports.postgresql | quote }}
-- name: REDASH_DATABASE_NAME
-  value: {{ .Values.postgresql.auth.database | quote }}
-{{- end -}}
-{{- if not .Values.redis.enabled }}
 {{- if not .Values.redash.selfManagedSecrets }}
 - name: REDASH_REDIS_URL
   {{- with .Values.externalRedisSecret }}
@@ -109,23 +78,6 @@ Shared environment block used across each component.
   {{- else }}
   value: {{ default "" .Values.externalRedis | quote }}
   {{- end }}
-{{- end }}
-{{- else }}
-- name: REDASH_REDIS_PASSWORD
-  valueFrom:
-    secretKeyRef:
-    {{- with .Values.redis.existingSecret }}
-      name: {{ . }}
-    {{- else }}
-      name: {{ .Release.Name }}-redis
-    {{- end }}
-      key: redis-password
-- name: REDASH_REDIS_HOSTNAME
-  value: {{ include "redash.redis.fullname" . }}
-- name: REDASH_REDIS_PORT
-  value: {{ .Values.redis.master.service.ports.redis | quote }}
-- name: REDASH_REDIS_NAME
-  value: {{ .Values.redis.database | quote }}
 {{- end }}
 {{- range $key, $value := .Values.env }}
 - name: {{ $key }}
