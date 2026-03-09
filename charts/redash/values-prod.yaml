@@ -462,15 +462,15 @@ worker:
   priorityClassName:
 
   # worker.livenessProbe -- Default worker's liveness probe to ensure workers are running fine
-  livenessProbe:
-    exec:
-      command:
-        - /bin/sh
-        - -c
-        - /app/bin/docker-entrypoint workers_healthcheck
-    timeoutSeconds: 10
-    initialDelaySeconds: 60
-    periodSeconds: 100
+  livenessProbe: []
+    # exec:
+    #   command:
+    #     - /bin/sh
+    #     - -c
+    #     - /app/bin/docker-entrypoint workers_healthcheck
+    # timeoutSeconds: 10
+    # initialDelaySeconds: 60
+    # periodSeconds: 100
 
 ## Configuration for Redash scheduler
 scheduler:
@@ -497,15 +497,15 @@ scheduler:
   securityContext: {}
 
   # scheduler.livenessProbe -- Liveness probe for scheduler to ensure workers are running fine
-  livenessProbe:
-    exec:
-      command:
-        - /bin/sh
-        - -c
-        - /app/bin/docker-entrypoint workers_healthcheck
-    timeoutSeconds: 10
-    initialDelaySeconds: 60
-    periodSeconds: 100
+  livenessProbe: []
+    # exec:
+    #   command:
+    #     - /bin/sh
+    #     - -c
+    #     - /app/bin/docker-entrypoint workers_healthcheck
+    # timeoutSeconds: 10
+    # initialDelaySeconds: 60
+    # periodSeconds: 100
 
   # scheduler.nodeSelector -- Node labels for scheduler pod assignment [ref](https://kubernetes.io/docs/user-guide/node-selection/)
   nodeSelector: {}
